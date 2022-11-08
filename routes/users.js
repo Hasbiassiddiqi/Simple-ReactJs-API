@@ -5,7 +5,7 @@ const UsersModel = require("../models/users");
 const passwordCheck = require("../utils/passwordCheck");
 
 // routing endpoint users utama
-router.get("/", async (req, res) => {
+router.get("/", async (res) => {
   const users = await UsersModel.findAll();
 
   res.status(200).json({
