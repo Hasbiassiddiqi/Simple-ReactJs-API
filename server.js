@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const port = 3200;
-
+const jwt = require("jsonwebtoken");
 const sequelize = require("./db.config");
 sequelize.sync().then(() => console.log("database ready!"));
 
@@ -14,5 +14,11 @@ app.use(express.json());
 
 app.use("/users", userEndpoint);
 app.use("/absensi", absensiEndpoint);
-
+app.use((req, res, next) => {
+  req.jwt = jwt;
+  req.secretKey = process.env.JWT_SECRET_KEY;
+  req.bcrypt = bcrypt;
+  req.saltRounds = saltRounds;
+  next();
+});
 app.listen(port, () => console.log(`running server on port ${port}`));
